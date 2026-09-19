@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Kashi Unveiled — a guide to the places, food, stays, stories and experiences of Varanasi.">
+  <title>Kashi Unveiled — Experience Kashi, not just visit it.</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <style>
+    :root { --ink:#201915; --muted:#6f625a; --paper:#fffaf3; --cream:#f3e5d0; --accent:#a64b2a; --gold:#b7863d; }
+    * { box-sizing:border-box; }
+    body { margin:0; font-family:"DM Sans",sans-serif; color:var(--ink); background:var(--paper); }
+    a { color:inherit; text-decoration:none; }
+    .nav { position:sticky; top:0; z-index:10; display:flex; justify-content:space-between; align-items:center; padding:18px 6%; background:rgba(255,250,243,.94); backdrop-filter:blur(10px); border-bottom:1px solid #eadcc9; }
+    .brand { font-family:"Playfair Display",serif; font-size:25px; font-weight:700; }
+    .brand span { color:var(--accent); }
+    .navlinks { display:flex; gap:25px; font-size:14px; font-weight:600; }
+    .hero { min-height:78vh; display:grid; place-items:center; text-align:center; padding:80px 7%; background:linear-gradient(180deg,rgba(32,25,21,.22),rgba(32,25,21,.64)), url("https://images.unsplash.com/photo-1561361058-c24cecae35ca?auto=format&fit=crop&w=1800&q=85") center/cover; color:white; }
+    .eyebrow { text-transform:uppercase; letter-spacing:3px; font-size:12px; font-weight:700; }
+    h1 { font-family:"Playfair Display",serif; font-size:clamp(48px,8vw,92px); line-height:.95; margin:18px 0; }
+    .hero p { max-width:680px; margin:0 auto 30px; font-size:19px; line-height:1.7; }
+    .btn { display:inline-block; background:var(--accent); color:#fff; padding:14px 22px; border-radius:999px; font-weight:700; }
+    section { padding:78px 7%; }
+    .sectionhead { max-width:720px; margin-bottom:35px; }
+    h2 { font-family:"Playfair Display",serif; font-size:42px; margin:0 0 12px; }
+    .lead { color:var(--muted); line-height:1.7; }
+    .grid { display:grid; grid-template-columns:repeat(4,1fr); gap:18px; }
+    .card { background:#fff; border:1px solid #eadcc9; border-radius:22px; padding:28px; min-height:210px; transition:.2s; }
+    .card:hover { transform:translateY(-4px); box-shadow:0 12px 35px rgba(60,35,20,.08); }
+    .icon { font-size:34px; }
+    .card h3 { font-family:"Playfair Display",serif; font-size:25px; margin:16px 0 8px; }
+    .card p { color:var(--muted); line-height:1.6; font-size:14px; }
+    .feature { background:var(--cream); }
+    .featuregrid { display:grid; grid-template-columns:1.2fr .8fr; gap:40px; align-items:center; }
+    .quote { font-family:"Playfair Display",serif; font-size:34px; line-height:1.35; }
+    .list { display:grid; gap:12px; }
+    .list div { padding:16px 18px; background:#fff; border-radius:14px; border:1px solid #eadcc9; }
+    .newsletter { text-align:center; background:#201915; color:white; }
+    .newsletter p { color:#d8ccc1; }
+    form { display:flex; max-width:520px; margin:25px auto 0; gap:10px; }
+    input { flex:1; padding:15px 18px; border-radius:999px; border:0; font:inherit; }
+    footer { padding:30px 7%; display:flex; justify-content:space-between; color:var(--muted); font-size:13px; }
+    @media(max-width:800px){ .navlinks{display:none}.grid,.featuregrid{grid-template-columns:1fr 1fr}.hero{min-height:72vh} }
+    @media(max-width:520px){ .grid,.featuregrid{grid-template-columns:1fr} h2{font-size:34px} form{flex-direction:column} }
+
+    .searchbar { max-width:760px; margin:30px auto 0; display:flex; gap:10px; background:rgba(255,255,255,.96); padding:8px; border-radius:999px; box-shadow:0 14px 45px rgba(0,0,0,.18); }
+    .searchbar input { min-width:0; color:var(--ink); background:transparent; }
+    .searchbar button { border:0; cursor:pointer; }
+    .eyebrow { color:var(--accent); }
+    .hero .eyebrow { color:#f8dfb4; }
+    .hero .btn { background:#d16a3c; }
+    .sectionhead h2 { letter-spacing:-.5px; }
+    .photo-strip { display:grid; grid-template-columns:1.35fr .65fr; gap:18px; margin-top:34px; }
+    .photo-card { min-height:270px; border-radius:24px; overflow:hidden; position:relative; background-size:cover; background-position:center; }
+    .photo-card.small { min-height:126px; }
+    .photo-stack { display:grid; gap:18px; }
+    .photo-overlay { position:absolute; inset:auto 0 0; padding:24px; color:#fff; background:linear-gradient(transparent,rgba(0,0,0,.72)); }
+    .photo-overlay h3 { font-family:"Playfair Display",serif; font-size:28px; margin:0 0 4px; }
+    .filterbar { display:flex; flex-wrap:wrap; gap:9px; margin:25px 0; }
+    .filter { border:1px solid #dccbb7; background:#fff; color:var(--ink); padding:9px 14px; border-radius:999px; cursor:pointer; font:inherit; }
+    .filter.active, .filter:hover { background:var(--accent); color:#fff; border-color:var(--accent); }
+    .mapbox { margin-top:30px; min-height:210px; border-radius:24px; border:1px solid #e2d1bc; background:linear-gradient(135deg,#eadcc7,#f8efe3); display:grid; place-items:center; text-align:center; padding:30px; }
+    .mapbox strong { font-family:"Playfair Display",serif; font-size:30px; }
+    .trust { font-size:12px; color:var(--muted); margin-top:18px; }
+    @media(max-width:650px){ .searchbar{border-radius:18px;flex-direction:column}.photo-strip{grid-template-columns:1fr}.photo-stack{grid-template-columns:1fr 1fr}.photo-card.small{min-height:150px} }
+  </style>
+</head>
+<body>
+  <nav class="nav">
+    <a class="brand" href="#">Kashi <span>Unveiled</span></a>
+    <div class="navlinks">
+      <a href="#explore-kashi">Explore</a><a href="#food-guide">Eat</a><a href="#stay-guide">Stay</a><a href="#itineraries">Plan</a>
+    </div>
+  </nav>
+
+  <header class="hero">
+    <div>
+      <div class="eyebrow">Varanasi • Kashi • Banaras</div>
+      <h1>Experience Kashi,<br>not just visit it.</h1>
+      <p>A thoughtful guide to the ghats, food, heritage, neighbourhoods, stays and stories that make Varanasi unforgettable.</p>
+      <a class="btn" href="#explore-kashi">Start exploring</a>
+      <div class="searchbar">
+        <input id="siteSearch" type="search" placeholder="Search places, food, hotels or itineraries…" aria-label="Search Kashi Unveiled">
+        <button class="btn" onclick="searchSite()">Search</button>
+      </div>
+    </div>
+  </header>
+
+  <section id="explore">
+    <div class="sectionhead">
+      <h2>Everything you need, in one place.</h2>
+      <p class="lead">A simple starting point for first-time visitors and curious travellers. The content below is a prototype and should be replaced with verified local information before launch.</p>
+    </div>
+    <div class="grid">
+      <a class="card" href="#places"><div class="icon">🛕</div><h3>Explore</h3><p>Ghats, temples, heritage, museums and places worth discovering.</p></a>
+      <a class="card" id="eat" href="#food"><div class="icon">🍛</div><h3>Eat</h3><p>Street food, local dishes, cafés and places to build your own food trail.</p></a>
+      <a class="card" id="stay" href="#hotels"><div class="icon">🏨</div><h3>Stay</h3><p>Areas and accommodation ideas for different budgets and travel styles.</p></a>
+      <a class="card" id="plan" href="#itineraries"><div class="icon">🗺️</div><h3>Plan</h3><p>Practical itineraries, transport guidance and trip-planning checklists.</p></a>
+    </div>
+  </section>
+
+  <section class="feature" id="places">
+    <div class="featuregrid">
+      <div>
+        <div class="eyebrow">The idea behind Kashi Unveiled</div>
+        <div class="quote">“Don't just collect places. Understand the city.”</div>
+        <p class="lead">The long-term goal is to combine practical travel information with the stories, traditions, food and everyday character of Kashi.</p>
+      </div>
+      <div class="list">
+        <div><strong>Hidden Kashi</strong><br><span class="lead">Neighbourhoods, crafts and lesser-known experiences.</span></div>
+        <div><strong>Plan by time</strong><br><span class="lead">1-day, 2-day, 3-day and longer itineraries.</span></div>
+        <div><strong>Plan by budget</strong><br><span class="lead">Simple options for budget, mid-range and premium trips.</span></div>
+      </div>
+    </div>
+  </section>
+
+
+  <section id="explore-kashi">
+    <div class="sectionhead">
+      <div class="eyebrow">Explore Kashi</div>
+      <h2>Start with the places that tell the story of Varanasi.</h2>
+      <p class="lead">From the Ganga waterfront to ancient pilgrimage sites and the heritage of Sarnath, explore Kashi through the places that shape its identity.</p>
+    </div>
+
+    <div class="grid">
+      <div class="card explore-card" data-category="river">
+        <div class="icon">🌊</div>
+        <h3>Ganga & Ghats</h3>
+        <p>Discover Varanasi's riverfront ghats and the traditions, rituals and daily life around the Ganga. The official district tourism site lists 88 ghats.</p>
+        <a class="btn" style="margin-top:10px;font-size:13px;padding:10px 16px" href="https://varanasi.nic.in/tourist-place/ganga-ghat/" target="_blank" rel="noopener">Official guide</a>
+      </div>
+
+      <div class="card explore-card" data-category="spiritual">
+        <div class="icon">🕉️</div>
+        <h3>Kashi Vishwanath</h3>
+        <p>One of Varanasi's most important temples, dedicated to Lord Shiva and associated with one of the twelve Jyotirlingas.</p>
+        <a class="btn" style="margin-top:10px;font-size:13px;padding:10px 16px" href="https://varanasi.nic.in/tourist-place/shri-kashi-vishwanath-temple/" target="_blank" rel="noopener">Official guide</a>
+      </div>
+
+      <div class="card explore-card" data-category="sarnath">
+        <div class="icon">☸️</div>
+        <h3>Sarnath</h3>
+        <p>About 10 km from Varanasi, Sarnath is the historic site associated with Buddha's first teaching after enlightenment.</p>
+        <a class="btn" style="margin-top:10px;font-size:13px;padding:10px 16px" href="https://varanasi.nic.in/tourist-place/sarnath/" target="_blank" rel="noopener">Official guide</a>
+      </div>
+
+      <div class="card explore-card" data-category="heritage sarnath">
+        <div class="icon">🏛️</div>
+        <h3>Sarnath Museum</h3>
+        <p>Explore archaeological material from Sarnath, including the Lion Capital of Ashoka and Buddhist sculptures and artifacts.</p>
+        <a class="btn" style="margin-top:10px;font-size:13px;padding:10px 16px" href="https://kashi.gov.in/listing-details/sarnath-museum" target="_blank" rel="noopener">Official guide</a>
+      </div>
+    </div>
+
+    <div class="photo-strip">
+      <div class="photo-card" style="background-image:url('https://images.unsplash.com/photo-1561361058-c24cecae35ca?auto=format&fit=crop&w=1200&q=85')">
+        <div class="photo-overlay"><h3>Ganga at the heart of Kashi</h3><div>Ghats • riverfront • everyday life</div></div>
+      </div>
+      <div class="photo-stack">
+        <div class="photo-card small" style="background-image:url('https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=900&q=85')">
+          <div class="photo-overlay"><h3>Heritage</h3></div>
+        </div>
+        <div class="photo-card small" style="background-image:url('https://images.unsplash.com/photo-1582510003544-4d00b7f74220?auto=format&fit=crop&w=900&q=85')">
+          <div class="photo-overlay"><h3>Discover</h3></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="filterbar" aria-label="Explore categories">
+      <button class="filter active" onclick="filterCards('all', this)">All</button>
+      <button class="filter" onclick="filterCards('river', this)">Ganga & Ghats</button>
+      <button class="filter" onclick="filterCards('heritage', this)">Heritage</button>
+      <button class="filter" onclick="filterCards('spiritual', this)">Temples</button>
+      <button class="filter" onclick="filterCards('sarnath', this)">Sarnath</button>
+    </div>
+
+    <div style="height:28px"></div>
+    <div class="featuregrid">
+      <div>
+        <div class="eyebrow">More to discover</div>
+        <div class="quote">Beyond the famous landmarks.</div>
+        <p class="lead">Future guides will cover important temples, BHU and New Vishwanath Temple, cultural spaces, crafts, museums, neighbourhoods and lesser-known experiences.</p>
+      </div>
+      <div class="list">
+        <div><strong>Temple trail</strong><br><span class="lead">Kashi Vishwanath, Kal Bhairav, Sankat Mochan, Durga Temple and more.</span></div>
+        <div><strong>Heritage & culture</strong><br><span class="lead">Music, textiles, crafts, architecture and the living traditions of Banaras.</span></div>
+        <div><strong>Hidden Kashi</strong><br><span class="lead">A future collection of quieter places and local experiences worth discovering.</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="food">
+    <div class="sectionhead">
+      <h2>Build your Kashi food trail.</h2>
+      <p class="lead">Future pages can organize local dishes and food spots by area, price range, meal and traveller preference.</p>
+    </div>
+    <div class="grid">
+      <div class="card"><div class="icon">🥣</div><h3>Breakfast</h3><p>Start with a curated morning food route.</p></div>
+      <div class="card"><div class="icon">🍵</div><h3>Chai & snacks</h3><p>Find small stops between sightseeing.</p></div>
+      <div class="card"><div class="icon">🍽️</div><h3>Local meals</h3><p>Explore regional flavours and trusted recommendations.</p></div>
+      <div class="card"><div class="icon">🍨</div><h3>Sweet trail</h3><p>Finish the day with classic local treats.</p></div>
+    </div>
+  </section>
+
+  <section class="feature" id="hotels">
+    <div class="sectionhead">
+      <h2>Where should you stay?</h2>
+      <p class="lead">A future hotel guide can compare areas, budgets, atmosphere and proximity to the experiences travellers care about.</p>
+    </div>
+  </section>
+
+
+  <section id="food-guide">
+    <div class="sectionhead">
+      <div class="eyebrow">Taste Kashi</div>
+      <h2>Follow the flavours of Banaras.</h2>
+      <p class="lead">Varanasi's official tourism material highlights food traditions including kachori, lassi, sweets, paan and thandai. Kashi Unveiled will turn those traditions into practical food trails.</p>
+    </div>
+    <div class="grid">
+      <div class="card"><div class="icon">🥣</div><h3>Kachori & Sabzi</h3><p>A classic Banarasi breakfast to look for in the city's local food lanes.</p></div>
+      <div class="card"><div class="icon">🥛</div><h3>Lassi</h3><p>A cooling local favourite and an easy stop during a day of exploring.</p></div>
+      <div class="card"><div class="icon">🍬</div><h3>Banarasi Sweets</h3><p>Discover traditional sweets and build a small dessert trail.</p></div>
+      <div class="card"><div class="icon">🌿</div><h3>Banarasi Paan</h3><p>A cultural food tradition closely associated with the identity of Banaras.</p></div>
+    </div>
+    <div class="photo-strip">
+      <div class="photo-card" style="background-image:url('https://images.unsplash.com/photo-1561361058-c24cecae35ca?auto=format&fit=crop&w=1200&q=85')">
+        <div class="photo-overlay"><h3>Ganga at the heart of Kashi</h3><div>Ghats • riverfront • everyday life</div></div>
+      </div>
+      <div class="photo-stack">
+        <div class="photo-card small" style="background-image:url('https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=900&q=85')">
+          <div class="photo-overlay"><h3>Heritage</h3></div>
+        </div>
+        <div class="photo-card small" style="background-image:url('https://images.unsplash.com/photo-1582510003544-4d00b7f74220?auto=format&fit=crop&w=900&q=85')">
+          <div class="photo-overlay"><h3>Discover</h3></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="filterbar" aria-label="Explore categories">
+      <button class="filter active" onclick="filterCards('all', this)">All</button>
+      <button class="filter" onclick="filterCards('river', this)">Ganga & Ghats</button>
+      <button class="filter" onclick="filterCards('heritage', this)">Heritage</button>
+      <button class="filter" onclick="filterCards('spiritual', this)">Temples</button>
+      <button class="filter" onclick="filterCards('sarnath', this)">Sarnath</button>
+    </div>
+
+    <div style="height:28px"></div>
+    <div class="featuregrid">
+      <div>
+        <div class="eyebrow">How we'll make it useful</div>
+        <div class="quote">Don't just list restaurants. Build food trails.</div>
+        <p class="lead">Future pages can organize places by neighbourhood, meal, budget and type of food, with current details verified before publication.</p>
+      </div>
+      <div class="list">
+        <div><strong>Morning food trail</strong><br><span class="lead">Breakfast → chai → sweets.</span></div>
+        <div><strong>Ghat-side food</strong><br><span class="lead">Easy options around major visitor areas.</span></div>
+        <div><strong>Budget food</strong><br><span class="lead">Affordable local eating for travellers.</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="stay-guide" class="feature">
+    <div class="sectionhead">
+      <div class="eyebrow">Stay in Kashi</div>
+      <h2>Choose where to stay before choosing the hotel.</h2>
+      <p class="lead">The official Kashi portal currently lists hotels, budget hotels, guest houses, dharamshalas, dormitories and luxury hotels. We'll organize those options by traveller needs rather than creating an undifferentiated list.</p>
+    </div>
+    <div class="grid">
+      <div class="card"><div class="icon">🎒</div><h3>Budget</h3><p>For travellers prioritizing affordability and location.</p></div>
+      <div class="card"><div class="icon">🌅</div><h3>Near the Ghats</h3><p>For visitors who want quick access to the riverfront experience.</p></div>
+      <div class="card"><div class="icon">🏨</div><h3>Comfort</h3><p>Mid-range options for a more relaxed stay.</p></div>
+      <div class="card"><div class="icon">✨</div><h3>Luxury</h3><p>Premium stays for travellers looking for a higher-end experience.</p></div>
+    </div>
+    <p class="lead" style="margin-top:28px">Accommodation listings will be checked for current names and details before launch. <a href="https://kashi.gov.in/place-to-stay-detail" target="_blank" rel="noopener" style="text-decoration:underline">See the official Kashi accommodation directory.</a></p>
+  </section>
+
+  <section id="itineraries">
+    <div class="sectionhead">
+      <div class="eyebrow">Plan Your Trip</div>
+      <h2>Ready-made days for different kinds of travellers.</h2>
+      <p class="lead">Use these as starting points, then adjust them around your arrival time, interests and pace.</p>
+    </div>
+
+    <div class="grid">
+      <div class="card">
+        <div class="icon">🌅</div>
+        <h3>1 Day</h3>
+        <p><strong>For a first taste of Kashi.</strong><br><br>Begin around the Ganga and ghats, explore the old-city area, make time for a major temple visit where appropriate, and finish with an evening riverfront experience.</p>
+      </div>
+      <div class="card">
+        <div class="icon">🛕</div>
+        <h3>2 Days</h3>
+        <p><strong>Heritage + riverfront.</strong><br><br>Use day one for the ghats, old city and food. Use day two for Sarnath and additional cultural or temple experiences.</p>
+      </div>
+      <div class="card">
+        <div class="icon">☸️</div>
+        <h3>3 Days</h3>
+        <p><strong>See Kashi at a slower pace.</strong><br><br>Add Sarnath, a second morning by the Ganga, more neighbourhood exploration and dedicated time for food and shopping.</p>
+      </div>
+      <div class="card">
+        <div class="icon">🧭</div>
+        <h3>5 Days</h3>
+        <p><strong>Go beyond the highlights.</strong><br><br>Leave room for heritage, crafts, music, local food trails, quieter areas and flexible days for experiences you discover along the way.</p>
+      </div>
+    </div>
+
+    <div style="height:35px"></div>
+    <div class="featuregrid">
+      <div>
+        <div class="eyebrow">Trip planner</div>
+        <div class="quote">Your itinerary should fit your trip—not the other way around.</div>
+        <p class="lead">The finished planner can let visitors choose trip length, budget, interests and pace, then create a suggested route.</p>
+      </div>
+      <div class="list">
+        <div><strong>Arrival checklist</strong><br><span class="lead">Airport/rail arrival, hotel check-in and first-day planning.</span></div>
+        <div><strong>Getting around</strong><br><span class="lead">Practical guidance for walking, autos, taxis and boats.</span></div>
+        <div><strong>Before you go</strong><br><span class="lead">Weather, timings and current local information should be verified before publication.</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="newsletter">
+    <div class="eyebrow">Coming next</div>
+    <h2>Get the Kashi guide.</h2>
+    <p>Join the list for new guides, food trails and trip-planning resources.</p>
+    <form onsubmit="event.preventDefault(); alert('Thanks! Newsletter signup will be connected before launch.');">
+      <input type="email" placeholder="Your email address" required>
+      <button class="btn" type="submit">Join</button>
+    </form>
+  </section>
+
+  <section>
+    <div class="sectionhead">
+      <div class="eyebrow">Find your way around</div>
+      <h2>A future interactive Kashi map.</h2>
+      <p class="lead">The live version can group attractions, food, hotels and itineraries on one map so visitors can plan by neighbourhood.</p>
+    </div>
+    <div class="mapbox">
+      <div><strong>Explore Kashi on a map</strong><p class="lead">Interactive maps and verified locations will be connected before launch.</p><a class="btn" href="#explore-kashi">Browse places</a></div>
+    </div>
+    <div class="trust">Prototype note: photos, listings, prices, timings and recommendations should be verified and updated before public launch.</div>
+  </section>
+
+  <footer>
+    <div>© 2026 Kashi Unveiled</div>
+    <div>Discover • Eat • Stay • Experience</div>
+  </footer>
+
+  <script>
+    function filterCards(category, button) {
+      document.querySelectorAll('.filter').forEach(b => b.classList.remove('active'));
+      button.classList.add('active');
+      document.querySelectorAll('.explore-card').forEach(card => {
+        const show = category === 'all' || (card.dataset.category || '').includes(category);
+        card.style.display = show ? '' : 'none';
+      });
+    }
+    function searchSite() {
+      const q = document.getElementById('siteSearch').value.trim().toLowerCase();
+      if (!q) { document.getElementById('explore-kashi').scrollIntoView({behavior:'smooth'}); return; }
+      const terms = {
+        temple:'explore-kashi', temples:'explore-kashi', ghat:'explore-kashi', ghats:'explore-kashi',
+        ganga:'explore-kashi', sarnath:'explore-kashi', heritage:'explore-kashi',
+        food:'food-guide', restaurant:'food-guide', eat:'food-guide',
+        hotel:'stay-guide', hotels:'stay-guide', stay:'stay-guide',
+        plan:'itineraries', itinerary:'itineraries', trip:'itineraries'
+      };
+      const target = Object.keys(terms).find(k => q.includes(k));
+      document.getElementById(target ? terms[target] : 'explore-kashi').scrollIntoView({behavior:'smooth'});
+    }
+    document.getElementById('siteSearch').addEventListener('keydown', e => { if (e.key === 'Enter') searchSite(); });
+  </script>
+</body>
+</html>
